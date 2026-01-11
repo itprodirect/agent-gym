@@ -6,6 +6,10 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 
+# env files
+.env
+.env.*
+
 # Virtual env (never commit)
 .venv/
 venv/
