@@ -10,6 +10,7 @@ from .schemas import BootstrapFile
 class WritePlan:
     path: Path
     bytes_len: int
+    action: str  # "create" | "overwrite"
 
 
 def _safe_join(out_dir: Path, rel_path: str) -> Path:
@@ -30,8 +31,9 @@ def plan_writes(out_dir: Path, files: list[BootstrapFile]) -> list[WritePlan]:
     plans: list[WritePlan] = []
     for f in files:
         p = _safe_join(out_dir, f.path)
-        plans.append(
-            WritePlan(path=p, bytes_len=len(f.content.encode("utf-8"))))
+        action = "overwrite" if p.exists() else "create"
+        plans.append(WritePlan(path=p, bytes_len=len(
+            f.content.encode("utf-8")), action=action))
     return plans
 
 
@@ -42,7 +44,9 @@ def write_files(out_dir: Path, files: list[BootstrapFile], *, force: bool, dry_r
     for plan, f in zip(plans, files):
         plan.path.parent.mkdir(parents=True, exist_ok=True)
 
-        if plan.path.exists() and not force:
+        # New UX: on dry-run, NEVER error due to existing files.
+        # We still report action=overwrite in the plan.
+        if plan.path.exists() and not force and not dry_run:
             raise FileExistsError(
                 f"Refusing to overwrite existing file: {plan.path}")
 

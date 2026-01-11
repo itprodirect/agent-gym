@@ -4,8 +4,14 @@ from pydantic import BaseModel, Field
 
 
 class BootstrapFile(BaseModel):
-    path: str = Field(..., description="Relative path to write, e.g. README.md or src/pkg/__init__.py")
-    content: str = Field(..., description="File contents as UTF-8 text")
+    """A single UTF-8 text file to write to disk."""
+
+    path: str = Field(
+        ...,
+        description="Relative path inside the generated repo (POSIX style), e.g. README.md or src/pkg/__init__.py",
+        examples=["README.md", "src/demo_repo/__init__.py"],
+    )
+    content: str = Field(..., description="UTF-8 text content for the file")
 
 
 class RepoBootstrapRequest(BaseModel):
@@ -17,3 +23,4 @@ class RepoBootstrapRequest(BaseModel):
 
 class RepoBootstrapOutput(BaseModel):
     files: list[BootstrapFile]
+    notes: str | None = None
