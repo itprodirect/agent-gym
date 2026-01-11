@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual env (never commit)
+.venv/
+venv/
+
+# Local scratch output
+_scratch/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+
+# VS Code (commit only settings.json)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
