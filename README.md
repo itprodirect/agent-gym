@@ -86,6 +86,34 @@ python -m apps.repo_bootstrapper \
   --dry-run
 ```
 
+### Save a generated plan
+
+Use `--save-plan` to keep the exact validated file list returned by the agent.
+
+```bash
+python -m apps.repo_bootstrapper \
+  --out ./_scratch/demo_repo \
+  --repo-name demo-repo \
+  --purpose "Example repo scaffold" \
+  --package demo_repo \
+  --save-plan ./_scratch/demo_repo.plan.json
+```
+
+The generated repo is written to `--out`, and the reusable JSON plan is written to the `--save-plan` path. Existing plan files are not overwritten unless you also pass `--force`.
+
+### Load a saved plan without calling the agent
+
+Use `--load-plan` to apply a saved plan offline. The plan is parsed with the same `RepoBootstrapOutput` schema and still must include the required files for `--package`.
+
+```bash
+python -m apps.repo_bootstrapper \
+  --out ./_scratch/demo_repo_from_plan \
+  --package demo_repo \
+  --load-plan ./_scratch/demo_repo.plan.json
+```
+
+This writes the plan contents to `--out` without requiring OpenAI credentials.
+
 ### Write a new repo scaffold
 
 ```bash
@@ -125,13 +153,16 @@ agent-gym/
       __main__.py
       agent.py
       cli.py
+      plans.py
       schemas.py
+      validation.py
       writer.py
   src/
     agent_gym/
   tests/
     conftest.py
     test_cli_smoke.py
+    test_plans.py
     test_writer.py
   docs/
     codex-goals.md
@@ -166,9 +197,9 @@ We use a simple, repeatable flow:
 
 ### Session 2 (recommended): Reproducible plans
 
-- [ ] Add `--save-plan plan.json` (save the exact generated file list)
-- [ ] Add `--load-plan plan.json` (apply a saved plan without calling the agent)
-- [ ] Add tests for save/load and validation
+- [x] Add `--save-plan plan.json` (save the exact generated file list)
+- [x] Add `--load-plan plan.json` (apply a saved plan without calling the agent)
+- [x] Add tests for save/load and validation
 
 ### Session 3: Template & CI options
 
