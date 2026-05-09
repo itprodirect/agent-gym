@@ -24,5 +24,8 @@ Use a handoff packet when a task needs more structure than a one-off prompt:
 ## Included example
 
 - [Claims Demo Data Factory plan handoff](../../examples/handoff-packets/claims-demo-data-factory-plan.md)
+- [Agent Lab issue #65: runs records page](../../examples/handoff-packets/agent-lab-issue-65-runs-records-page.md)
 
-That example shows how a replayable bootstrap plan can become a safe Agent Lab seed for Agent Lab, IT Pro Direct, `claims-intelligence-foundation`, policy-dispute tools, and future sales demos without using real client data or production integrations.
+The claims example shows how a replayable bootstrap plan can become a safe Agent Lab seed for Agent Lab, IT Pro Direct, `claims-intelligence-foundation`, policy-dispute tools, and future sales demos without using real client data or production integrations.
+
+The issue #65 example shows how to copy a local Agent Gym handoff packet into Codex or Claude Code for an Agent Lab implementation run while keeping Agent Gym local-only.
