@@ -27,6 +27,21 @@ We built a working CLI that uses an Agents SDK agent to generate a **minimal rep
 
 ---
 
+## Codex workflow sandbox foundation
+
+This repo also serves as a lightweight sandbox for practicing repeatable Codex sessions before adding more app surface area.
+
+Use these docs when preparing a run:
+
+- [AGENTS.md](AGENTS.md): repository guardrails for safety, scope, testing, and file writes.
+- [docs/codex-goals.md](docs/codex-goals.md): examples of specific, reviewable Codex goals and vague goals to avoid.
+- [docs/experiment-log.md](docs/experiment-log.md): template for recording `/goal`, memories, external migration, terminal resize reflow, and prevent-sleep experiments.
+- [docs/session-template.md](docs/session-template.md): copyable checklist for future Codex sessions.
+
+For this foundation PR, keep changes limited to docs and local workflow notes. Do not add cloud services, auth, databases, dependencies, or unrelated app code.
+
+---
+
 ## Quickstart
 
 ### 1) Create & activate a virtual environment
@@ -116,7 +131,12 @@ agent-gym/
     agent_gym/
   tests/
     conftest.py
+    test_cli_smoke.py
     test_writer.py
+  docs/
+    codex-goals.md
+    experiment-log.md
+    session-template.md
   AGENTS.md
   pyproject.toml
   README.md
