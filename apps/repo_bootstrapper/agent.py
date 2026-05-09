@@ -6,6 +6,11 @@ from textwrap import dedent
 from agents import Agent, Runner
 
 from .schemas import RepoBootstrapRequest, RepoBootstrapOutput
+from .validation import (
+    required_list_for_prompt,
+    required_paths_for_package,
+    validate_output,
+)
 
 INSTRUCTIONS = dedent(
     """
@@ -29,33 +34,6 @@ INSTRUCTIONS = dedent(
     """
 ).strip()
 
-REQUIRED_PATHS = {
-    "README.md",
-    "AGENTS.md",
-    ".gitignore",
-    "pyproject.toml",
-    "ROADMAP.md",
-    "tests/test_smoke.py",
-}
-
-
-def validate_output(package: str, paths: set[str]) -> None:
-    required = set(REQUIRED_PATHS)
-    required.add(f"src/{package}/__init__.py")
-
-    missing = sorted(required - paths)
-    if missing:
-        raise ValueError(
-            "Agent output missing required files:\n- " + "\n- ".join(missing))
-
-
-def _required_list_for_prompt(package: str) -> list[str]:
-    # Explicit required paths we demand from the agent.
-    req = sorted(REQUIRED_PATHS)
-    req.append(f"src/{package}/__init__.py")
-    return sorted(req)
-
-
 def build_agent(model: str | None = None) -> Agent:
     chosen_model = model or os.getenv("OPENAI_MODEL") or "gpt-4o-mini"
     return Agent(
@@ -68,7 +46,7 @@ def build_agent(model: str | None = None) -> Agent:
 
 def build_prompt(req: RepoBootstrapRequest) -> str:
     required_paths = "\n".join(
-        f"- {p}" for p in _required_list_for_prompt(req.package))
+        f"- {p}" for p in required_list_for_prompt(req.package))
 
     return dedent(
         f"""
@@ -97,7 +75,7 @@ def build_prompt(req: RepoBootstrapRequest) -> str:
 def build_repair_prompt(req: RepoBootstrapRequest, missing: list[str]) -> str:
     missing_block = "\n".join(f"- {m}" for m in missing)
     required_paths = "\n".join(
-        f"- {p}" for p in _required_list_for_prompt(req.package))
+        f"- {p}" for p in required_list_for_prompt(req.package))
 
     return dedent(
         f"""
@@ -133,8 +111,7 @@ def generate_repo_files(req: RepoBootstrapRequest, *, model: str | None = None) 
             validate_output(req.package, paths)
             return last
         except ValueError:
-            required = set(REQUIRED_PATHS) | {f"src/{req.package}/__init__.py"}
-            missing = sorted(required - paths)
+            missing = sorted(required_paths_for_package(req.package) - paths)
 
     # If we get here, retries failed.
     # Raise a clean error so the CLI prints a useful message.
