@@ -38,6 +38,7 @@ Use these docs when preparing a run:
 - [docs/experiment-log.md](docs/experiment-log.md): template for recording `/goal`, memories, external migration, terminal resize reflow, and prevent-sleep experiments.
 - [docs/goal-scorecards/README.md](docs/goal-scorecards/README.md): practical scorecards for judging whether a `/goal` run was trustworthy enough to reuse.
 - [docs/session-template.md](docs/session-template.md): copyable checklist for future Codex sessions.
+- [examples/plans/README.md](examples/plans/README.md): reusable bootstrap plans, including the claims demo data factory plan.
 
 For this foundation PR, keep changes limited to docs and local workflow notes. Do not add cloud services, auth, databases, dependencies, or unrelated app code.
 
@@ -174,6 +175,10 @@ agent-gym/
       pr-3-reproducible-bootstrap-plans.md
       template.md
     session-template.md
+  examples/
+    plans/
+      claims-demo-data-factory.plan.json
+      README.md
   AGENTS.md
   pyproject.toml
   README.md
