@@ -36,6 +36,7 @@ Use these docs when preparing a run:
 - [AGENTS.md](AGENTS.md): repository guardrails for safety, scope, testing, and file writes.
 - [docs/codex-goals.md](docs/codex-goals.md): examples of specific, reviewable Codex goals and vague goals to avoid.
 - [docs/experiment-log.md](docs/experiment-log.md): template for recording `/goal`, memories, external migration, terminal resize reflow, and prevent-sleep experiments.
+- [docs/goal-scorecards/README.md](docs/goal-scorecards/README.md): practical scorecards for judging whether a `/goal` run was trustworthy enough to reuse.
 - [docs/session-template.md](docs/session-template.md): copyable checklist for future Codex sessions.
 
 For this foundation PR, keep changes limited to docs and local workflow notes. Do not add cloud services, auth, databases, dependencies, or unrelated app code.
@@ -167,6 +168,11 @@ agent-gym/
   docs/
     codex-goals.md
     experiment-log.md
+    goal-scorecards/
+      README.md
+      pr-2-codex-workflow-sandbox-foundation.md
+      pr-3-reproducible-bootstrap-plans.md
+      template.md
     session-template.md
   AGENTS.md
   pyproject.toml
