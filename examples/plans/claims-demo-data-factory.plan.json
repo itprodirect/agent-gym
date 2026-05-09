@@ -1,0 +1,41 @@
+{
+  "files": [
+    {
+      "content": "__pycache__/\n*.py[cod]\n.pytest_cache/\n.mypy_cache/\n.ruff_cache/\n.venv/\nvenv/\n.env\n.env.*\n_scratch/\n",
+      "path": ".gitignore"
+    },
+    {
+      "content": "# AGENTS.md\n\nThis demo repository is for fake insurance claims fixtures only.\n\nGuardrails:\n\n- Do not add real client, claimant, policy, medical, financial, or legal data.\n- Do not treat fixture content as legal advice, coverage advice, or claim-handling guidance.\n- Keep examples local and deterministic.\n- Do not add cloud services, auth, databases, or external integrations.\n- Prefer small, reviewable changes with offline tests.\n",
+      "path": "AGENTS.md"
+    },
+    {
+      "content": "# Claims Demo Data Factory\n\nA tiny Python fixture package for generating fake, non-sensitive insurance claims demo data for AI workflow demos, legal/claims education, and product prototypes.\n\nThe data in this repo is fictional. It is not client data, claim advice, legal advice, coverage advice, or a substitute for professional review.\n\n## Usage\n\n```python\nfrom claims_demo_data_factory import build_demo_claims\n\nclaims = build_demo_claims()\nprint(claims[0][\"claim_id\"])\n```\n\n## Tests\n\n```bash\npython -m pytest -q\n```\n\n## Fixture Scope\n\nThe starter fixtures include synthetic claim IDs, policy IDs, loss categories, statuses, dates, estimated loss amounts, and short notes. Names, IDs, and notes are intentionally generic and fake.\n\n## Out of Scope\n\n- Real client or claimant data\n- Legal advice or claim outcome recommendations\n- Cloud services\n- Authentication\n- Databases\n- External integrations\n",
+      "path": "README.md"
+    },
+    {
+      "content": "# Roadmap\n\nSafe future improvements:\n\n- Add more fictional claim scenarios for demos.\n- Add a local-only CSV export example.\n- Add a data dictionary for fixture fields.\n- Add tests that confirm all generated records use `DEMO-` identifiers.\n\nDo not add real claims data, legal advice, cloud services, auth, databases, or external integrations.\n",
+      "path": "ROADMAP.md"
+    },
+    {
+      "content": "[project]\nname = \"claims-demo-data-factory\"\nversion = \"0.1.0\"\ndescription = \"Fake, non-sensitive insurance claims demo fixtures.\"\nrequires-python = \">=3.10\"\n\n[tool.pytest.ini_options]\ntestpaths = [\"tests\"]\npythonpath = [\"src\"]\n",
+      "path": "pyproject.toml"
+    },
+    {
+      "content": "from .fixtures import build_demo_claims, filter_claims_by_status\n\n__all__ = [\"build_demo_claims\", \"filter_claims_by_status\"]\n",
+      "path": "src/claims_demo_data_factory/__init__.py"
+    },
+    {
+      "content": "from __future__ import annotations\n\nfrom copy import deepcopy\nfrom typing import Any\n\nDEMO_CLAIMS: list[dict[str, Any]] = [\n    {\n        \"claim_id\": \"DEMO-CLM-0001\",\n        \"policy_number\": \"DEMO-POL-1001\",\n        \"claimant_name\": \"Alex Sample\",\n        \"loss_type\": \"water_damage\",\n        \"loss_date\": \"2026-01-14\",\n        \"status\": \"triage\",\n        \"estimated_loss_usd\": 4200,\n        \"notes\": \"Fictional kitchen supply line leak for workflow demos.\",\n    },\n    {\n        \"claim_id\": \"DEMO-CLM-0002\",\n        \"policy_number\": \"DEMO-POL-1002\",\n        \"claimant_name\": \"Jordan Example\",\n        \"loss_type\": \"auto_collision\",\n        \"loss_date\": \"2026-02-03\",\n        \"status\": \"review\",\n        \"estimated_loss_usd\": 9800,\n        \"notes\": \"Fictional low-speed parking lot collision for prototype screens.\",\n    },\n    {\n        \"claim_id\": \"DEMO-CLM-0003\",\n        \"policy_number\": \"DEMO-POL-1003\",\n        \"claimant_name\": \"Taylor Demo\",\n        \"loss_type\": \"wind_damage\",\n        \"loss_date\": \"2026-03-19\",\n        \"status\": \"ready_for_demo\",\n        \"estimated_loss_usd\": 12500,\n        \"notes\": \"Fictional roof shingle damage for education examples.\",\n    },\n]\n\n\ndef build_demo_claims() -> list[dict[str, Any]]:\n    \"\"\"Return independent copies of the fake demo claims.\"\"\"\n    return deepcopy(DEMO_CLAIMS)\n\n\ndef filter_claims_by_status(status: str) -> list[dict[str, Any]]:\n    \"\"\"Return fake demo claims with the requested status.\"\"\"\n    return [claim for claim in build_demo_claims() if claim[\"status\"] == status]\n",
+      "path": "src/claims_demo_data_factory/fixtures.py"
+    },
+    {
+      "content": "from claims_demo_data_factory import build_demo_claims\n\n\ndef test_smoke():\n    assert build_demo_claims()\n",
+      "path": "tests/test_smoke.py"
+    },
+    {
+      "content": "from claims_demo_data_factory import build_demo_claims, filter_claims_by_status\n\n\ndef test_demo_claims_are_fake_and_namespaced():\n    claims = build_demo_claims()\n    assert len(claims) == 3\n    assert all(claim[\"claim_id\"].startswith(\"DEMO-\") for claim in claims)\n    assert all(claim[\"policy_number\"].startswith(\"DEMO-\") for claim in claims)\n    assert all(\"client\" not in claim[\"notes\"].lower() for claim in claims)\n\n\ndef test_filter_claims_by_status_returns_copies():\n    ready = filter_claims_by_status(\"ready_for_demo\")\n    assert [claim[\"claim_id\"] for claim in ready] == [\"DEMO-CLM-0003\"]\n    ready[0][\"status\"] = \"mutated\"\n    assert filter_claims_by_status(\"ready_for_demo\")[0][\"status\"] == \"ready_for_demo\"\n",
+      "path": "tests/test_fixtures.py"
+    }
+  ],
+  "notes": "Curated from a live --save-plan seed for a fake-only claims demo data factory. Contains no real client data, legal advice, cloud services, auth, databases, or external integrations."
+}
