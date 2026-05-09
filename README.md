@@ -38,6 +38,7 @@ Use these docs when preparing a run:
 - [docs/current-state.md](docs/current-state.md): current-state checkpoint for PR #2 through PR #5 goal experiments.
 - [docs/experiment-log.md](docs/experiment-log.md): template for recording `/goal`, memories, external migration, terminal resize reflow, and prevent-sleep experiments.
 - [docs/goal-scorecards/README.md](docs/goal-scorecards/README.md): practical scorecards for judging whether a `/goal` run was trustworthy enough to reuse.
+- [docs/handoff-packets/README.md](docs/handoff-packets/README.md): reusable Markdown handoff packets for Codex, Claude Code, and future Agent Lab runs.
 - [docs/session-template.md](docs/session-template.md): copyable checklist for future Codex sessions.
 - [examples/plans/README.md](examples/plans/README.md): reusable bootstrap plans, including the claims demo data factory plan.
 
@@ -176,8 +177,13 @@ agent-gym/
       pr-2-codex-workflow-sandbox-foundation.md
       pr-3-reproducible-bootstrap-plans.md
       template.md
+    handoff-packets/
+      README.md
+      template.md
     session-template.md
   examples/
+    handoff-packets/
+      claims-demo-data-factory-plan.md
     plans/
       claims-demo-data-factory.plan.json
       README.md
